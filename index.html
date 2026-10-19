@@ -223,7 +223,7 @@
         btn.innerText = 'در حال بررسی...';
         statusBox.className = 'status-box';
 
-        const N8N_WEBHOOK_URL = 'https://automation.mahaksoft.com/webhook-test/login-check';
+        const N8N_WEBHOOK_URL = 'https://automation.mahaksoft.com/webhook/login-check';
 
         try {
             const response = await fetch(N8N_WEBHOOK_URL, {
@@ -231,9 +231,15 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-
-            const data = await response.json();
-
+        
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (e) {
+                // اگر پاسخ سرور JSON نبود
+                data = { message: 'پاسخ نامعتبر از سرور دریافت شد.' };
+            }
+        
             if (response.ok && data.status === 'success') {
                 showStatus('ورود با موفقیت انجام شد. در حال بازگشت...', 'success');
                 setTimeout(() => {
@@ -244,13 +250,15 @@
                     }
                 }, 1500);
             } else {
-                const errorMsg = data.message || 'نام کاربری یا رمز عبور اشتباه است.';
+                // نمایش خطایی که از سرور یا n8n برگشته
+                const errorMsg = data.message || 'نام کاربری یا رمز عبور اشتباه است (کد ' + response.status + ')';
                 showStatus(errorMsg, 'error');
                 btn.disabled = false;
                 btn.innerText = 'ورود به سیستم';
             }
         } catch (err) {
-            showStatus('خطا در برقراری ارتباط با سرور. لطفاً دوباره تلاش کنید.', 'error');
+            console.error('Fetch error:', err);
+            showStatus('خطا در برقراری ارتباط با سرور یا مسدود شدن درخواست (CORS).', 'error');
             btn.disabled = false;
             btn.innerText = 'ورود به سیستم';
         }
