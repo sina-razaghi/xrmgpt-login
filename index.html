@@ -192,7 +192,10 @@
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const chatId = urlParams.get('chat_id') || '0000';
+    
+    const chatId = urlParams.get('chat_id');
+    const message_id = urlParams.get('message_id');
+    const platform = urlParams.get('platform');
 
     async function handleLogin() {
         const branch = document.getElementById('branch').value;
@@ -209,10 +212,11 @@
         const formattedUsername = `${branch}\\\\${rawUsername}`;
 
         const payload = {
-            platform: "Bale",
+            platform: platform,
             chat_id: chatId,
             username: formattedUsername,
-            password: password 
+            password: password,
+            message_id: message_id
         };
 
         btn.disabled = true;
