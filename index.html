@@ -200,7 +200,7 @@
     async function handleLogin() {
         const branch = document.getElementById('branch').value;
         const rawUsername = document.getElementById('username').value.trim();
-        const password = document.getElementById('GAPGPTMASKTOKENu3324j6syxoX4X').value;
+        const password = document.getElementById('password').value;
         const btn = document.getElementById('submitBtn');
         const statusBox = document.getElementById('statusBox');
 
@@ -209,7 +209,7 @@
             return;
         }
 
-        const formattedUsername = `${branch}\\\\${rawUsername}`;
+        const formattedUsername = `${branch}\\${rawUsername}`;
 
         const payload = {
             platform: platform,
