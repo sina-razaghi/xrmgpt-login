@@ -228,7 +228,7 @@
         try {
             const response = await fetch(N8N_WEBHOOK_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
         
@@ -236,7 +236,6 @@
             try {
                 data = await response.json();
             } catch (e) {
-                // اگر پاسخ سرور JSON نبود
                 data = { message: 'پاسخ نامعتبر از سرور دریافت شد.' };
             }
         
