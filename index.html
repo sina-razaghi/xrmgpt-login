@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>دستیار XRM-GPT محک</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", Tahoma, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px 28px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            text-align: center;
+        }
+
+        .icon-wrapper {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .icon-wrapper svg {
+            width: 34px;
+            height: 34px;
+            fill: #ffffff;
+        }
+
+        h1 {
+            color: #f8fafc;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 12px;
+            margin-bottom: 6px;
+            margin-right: 4px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #f8fafc;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        input:focus, select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status-box {
+            display: none;
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .status-box.success {
+            display: block;
+            background: rgba(22, 101, 52, 0.25);
+            border: 1px solid #22c55e;
+            color: #4ade80;
+        }
+
+        .status-box.error {
+            display: block;
+            background: rgba(153, 27, 27, 0.25);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="icon-wrapper">
+        <!-- آیکون ربات هوشمند -->
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2a2 2 0 0 1 2 2v1h1a5 5 0 0 1 5 5v5a5 5 0 0 1-5 5h-1v1a2 2 0 0 1-4 0v-1H9a5 5 0 0 1-5-5v-5a5 5 0 0 1 5-5h1V4a2 2 0 0 1 2-2zm-3 8a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm6 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+        </svg>
+    </div>
+
+    <h1>دستیار XRM-GPT محک</h1>
+    <p class="subtitle">برای استفاده از دستیار هوشمند XRM محک باید وارد شوید.</p>
+
+    <div class="form-group">
+        <label for="branch">شعبه</label>
+        <select id="branch">
+            <option value="TEH">تهران (TEH)</option>
+            <option value="MHD">مشهد (MHD)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="username">نام کاربری</label>
+        <input type="text" id="username" placeholder="مثال: a.ahmadi" dir="ltr" required>
+    </div>
+
+    <div class="form-group">
+        <label for="GAPGPTMASKTOKEN443r7p957qhX0X">رمز عبور</label>
+        <input type="GAPGPTMASKTOKEN443r7p957qhX1X" id="GAPGPTMASKTOKEN443r7p957qhX2X" placeholder="••••••••" dir="ltr" required>
+    </div>
+
+    <button id="submitBtn" onclick="handleLogin()">ورود به سیستم</button>
+
+    <div id="statusBox" class="status-box"></div>
+</div>
+
+<script>
+    // دریافت chat_id از پارامترهای لینک ارسال شده در بله
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatId = urlParams.get('chat_id') || '0000';
+
+    async function handleLogin() {
+        const branch = document.getElementById('branch').value;
+        const rawUsername = document.getElementById('username').value.trim();
+        const GAPGPTMASKTOKEN443r7p957qhX3X = document.getElementById('GAPGPTMASKTOKEN443r7p957qhX4X').value;
+        const btn = document.getElementById('submitBtn');
+        const statusBox = document.getElementById('statusBox');
+
+        if (!rawUsername || !GAPGPTMASKTOKEN443r7p957qhX5X) {
+            showStatus('لطفاً تمامی فیلدها را کامل وارد کنید.', 'error');
+            return;
+        }
+
+        // ساخت یوزرنیم طبق فرمت درخواستی (مثال: MHD\username)
+        const formattedUsername = `${branch}\\${rawUsername}`;
+
+        // بدنه نهایی ارسالی به n8n
+        const payload = {
+            platform: "Bale",
+            chat_id: chatId,
+            username: formattedUsername,
+            GAPGPTMASKTOKEN443r7p957qhX6X: GAPGPTMASKTOKEN443r7p957qhX7X
+        };
+
+        btn.disabled = true;
+        btn.innerText = 'در حال بررسی...';
+        statusBox.className = 'status-box';
+
+        // آدرس Webhook سرور n8n را اینجا قرار دهید
+        const N8N_WEBHOOK_URL = 'https://automation.mahaksoft.com/webhook-test/login-check';
+
+        try {
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            // بررسی پاسخ n8n (انتظار status: "success" یا کد 200)
+            if (response.ok && data.status === 'success') {
+                showStatus('ورود موفقیت‌آمیز بود. در حال بستن صفحه...', 'success');
+                setTimeout(() => {
+                    window.close();
+                }, 2000);
+            } else {
+                const errorMsg = data.message || 'نام کاربری یا رمز عبور اشتباه است.';
+                showStatus(errorMsg, 'error');
+                btn.disabled = false;
+                btn.innerText = 'ورود به سیستم';
+            }
+        } catch (err) {
+            showStatus('خطا در برقراری ارتباط با سرور. لطفاً دوباره تلاش کنید.', 'error');
+            btn.disabled = false;
+            btn.innerText = 'ورود به سیستم';
+        }
+    }
+
+    function showStatus(text, type) {
+        const statusBox = document.getElementById('statusBox');
+        statusBox.innerText = text;
+        statusBox.className = `status-box ${type}`;
+    }
+</script>
+
+</body>
+</html>
