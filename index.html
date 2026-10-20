@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ورود به سامانه دستیار هوشمند محک</title>
     <!-- اسکریپت مینی‌اپ بله / تلگرام جهت بستن خودکار پنجره -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://tapi.bale.ai/miniapp.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -185,17 +185,22 @@
 </div>
 
 <script>
-    // آماده‌سازی محیط وب‌اپ بله
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
+    // تشخیص شیء WebApp در بله (یا تلگرام در صورت استفاده مشترک)
+    const webApp = (window.Bale && window.Bale.WebApp) 
+        ? window.Bale.WebApp 
+        : (window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null);
+
+    if (webApp) {
+        webApp.ready();
+        webApp.expand();
     }
 
     const urlParams = new URLSearchParams(window.location.search);
     
-    const chatId = urlParams.get('chat_id');
-    const message_id = urlParams.get('message_id');
-    const platform = urlParams.get('platform');
+    // دریافت chat_id از URL یا به صورت خودکار از اطلاعات کاربر در مینی‌اپ بله
+    const chatId = urlParams.get('chat_id') || (webApp?.initDataUnsafe?.user?.id ? String(webApp.initDataUnsafe.user.id) : '');
+    const message_id = urlParams.get('message_id') || '';
+    const platform = urlParams.get('platform') || (window.Bale ? 'bale' : '');
 
     async function handleLogin() {
         const branch = document.getElementById('branch').value;
@@ -211,13 +216,14 @@
 
         const formattedUsername = `${branch}\\${rawUsername}`;
 
-        const payload = {
+        // استفاده از URLSearchParams برای جلوگیری از ارسال درخواست Preflight (OPTIONS)
+        const formBody = new URLSearchParams({
             platform: platform,
             chat_id: chatId,
             username: formattedUsername,
             password: password,
             message_id: message_id
-        };
+        });
 
         btn.disabled = true;
         btn.innerText = 'در حال بررسی...';
@@ -228,8 +234,10 @@
         try {
             const response = await fetch(N8N_WEBHOOK_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: formBody.toString()
             });
         
             let data = {};
@@ -242,14 +250,13 @@
             if (response.ok && data.status === 'success') {
                 showStatus('ورود با موفقیت انجام شد. در حال بازگشت...', 'success');
                 setTimeout(() => {
-                    if (window.Telegram && window.Telegram.WebApp) {
-                        window.Telegram.WebApp.close();
+                    if (webApp) {
+                        webApp.close(); // بستن خودکار مینی‌اپ در بله
                     } else {
                         window.close();
                     }
                 }, 1500);
             } else {
-                // نمایش خطایی که از سرور یا n8n برگشته
                 const errorMsg = data.message || 'نام کاربری یا رمز عبور اشتباه است (کد ' + response.status + ')';
                 showStatus(errorMsg, 'error');
                 btn.disabled = false;
@@ -257,7 +264,7 @@
             }
         } catch (err) {
             console.error('Fetch error:', err);
-            showStatus('خطا در برقراری ارتباط با سرور یا مسدود شدن درخواست (CORS).', 'error');
+            showStatus('خطا در برقراری ارتباط با سرور: ' + (err.message || 'CORS / Network Error'), 'error');
             btn.disabled = false;
             btn.innerText = 'ورود به سیستم';
         }
