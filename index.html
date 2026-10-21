@@ -200,7 +200,7 @@
     // دریافت chat_id از URL یا به صورت خودکار از اطلاعات کاربر در مینی‌اپ بله
     const chatId = urlParams.get('chat_id') || (webApp?.initDataUnsafe?.user?.id ? String(webApp.initDataUnsafe.user.id) : '');
     const message_id = urlParams.get('message_id') || '';
-    const platform = urlParams.get('platform') || (window.Bale ? 'bale' : '');
+    const platform = (urlParams.get('platform') || (window.Bale ? 'bale' : '');
 
     async function handleLogin() {
         const branch = document.getElementById('branch').value;
