@@ -231,14 +231,6 @@
 
         const N8N_WEBHOOK_URL = 'https://automation.mahaksoft.com/webhook/logincheck';
 
-        const formBody = new URLSearchParams({
-            platform: platform,
-            chat_id: chatId,
-            username: `${branch}\\${rawUsername}`,
-            password: password,
-            message_id: message_id
-        });
-
         try {            
             const response = await fetch(N8N_WEBHOOK_URL, {
                 method: 'POST',
