@@ -231,24 +231,19 @@
 
         const N8N_WEBHOOK_URL = 'https://automation.mahaksoft.com/webhook/logincheck';
 
-        try {
-            const formBody = new URLSearchParams({
-                platform: platform,
-                chat_id: chatId,
-                username: `${branch}\\${rawUsername}`,
-                password: password,
-                message_id: message_id
-            });
-            
-            const response = await fetch('https://automation.mahaksoft.com/webhook/logincheck', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: formBody.toString()
-            });
+        const formBody = new URLSearchParams({
+            platform: platform,
+            chat_id: chatId,
+            username: `${branch}\\${rawUsername}`,
+            password: password,
+            message_id: message_id
+        });
 
+        try {            
+            const response = await fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                body: formBody // نیازی به toString و تنظیم دستی هدر Content-Type نیست
+            });
         
             let data = {};
             try {
